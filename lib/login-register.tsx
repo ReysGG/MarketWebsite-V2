@@ -79,14 +79,8 @@ export const login = async (prevState: unknown, formData: FormData) => {
     return { error: "Invalid email or password" };
   }
 
-  // Verify password
-  const isValid = await bcrypt.compare(password, user.password);
-  if (!isValid) {
-    return { error: "Invalid email or password" };
-  }
-
   // If all validation passes, proceed with signIn
-  await signIn("Credentials", {
+  await signIn("credentials", {
     email,
     password,
     redirect: false,

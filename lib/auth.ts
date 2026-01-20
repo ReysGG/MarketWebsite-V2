@@ -32,28 +32,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       authorize: async (credentials) => {
         try {
-          let user = null
-          const { email, password } = await signInSchema.parseAsync(credentials)
- 
-          // logic to verify if the user exists
-          user = await getUserFromDb(email)
-
+          // ✅ VALIDASI DULU dengan Zod
+          const { success, data } = await signInSchema.safeParseAsync(credentials)
+          
+          // ✅ Query dengan validated email
+          const user = await prisma.user.findUnique({
+            where: { email: data?.email },  // Sekarang pasti string yang valid
+          })
           if (!user || !user.password) {
-            throw new Error("Invalid credentials.")
-          }
-          
-          const isValid = await bcrypt.compare(password, user.password)
-
-          if (!isValid) {
-            throw new Error("Invalid credentials.")
-          }
-          
-          return user
-        } catch (error) {
-          console.log(error)
-          return null
-        }
-      },
+      throw new Error("Invalid credentials.")
+    }
+    
+    const isValid = await bcrypt.compare(data?.password as string, user.password)
+    if (!isValid) {
+      throw new Error("Invalid credentials.")
+    }
+    
+    return user
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+},
     }),
   ],
   adapter: PrismaAdapter(prisma),
