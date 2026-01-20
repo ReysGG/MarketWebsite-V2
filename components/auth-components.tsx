@@ -24,7 +24,7 @@ export function SignOut() {
       }}
       className="w-full"
     >
-      <button className="bg-neutral-700 text-white p-2 rounded-md">
+      <button className="bg-neutral-700 text-white px-2 py-1 rounded-md">
         Sign Out
       </button>
     </form>

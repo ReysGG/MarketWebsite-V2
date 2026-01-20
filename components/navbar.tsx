@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { SearchBar } from "./searchbar";
 import { auth } from "@/lib/auth";
+import { signOut } from "next-auth/react";
+import { SignOut } from "./auth-components";
 
 export const Navbar = async () => {
   const session = await auth();
@@ -68,7 +70,7 @@ export const Navbar = async () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <SignOut />
               </li>
             </ul>
           </div>
