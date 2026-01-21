@@ -1,6 +1,7 @@
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import NextAuth from 'next-auth'
 import GitHub from 'next-auth/providers/github'
+import Google from 'next-auth/providers/google'
 import prisma from './prisma'
 import Credentials from "next-auth/providers/credentials"
 import { signInSchema } from './zod'
@@ -10,52 +11,81 @@ import { getUserFromDb } from './databasefunction/getuserDB'
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     GitHub,
+    Google,
     Credentials({
       name: "Credentials",
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
       credentials: {
         email: {
           id: "email",
-          type:"email",
-          name: "Email",
+          type: "email",
+          name: "email",
           placeholder: "m@example.com",
           required: true,
         },
         password: {
           id: "password",
           type: "password",
-          name: "Password",
+          name: "password",
           placeholder: "*****",
           required: true,
         },
       },
       authorize: async (credentials) => {
         try {
-          // ✅ VALIDASI DULU dengan Zod
-          const { success, data } = await signInSchema.safeParseAsync(credentials)
-          
-          // ✅ Query dengan validated email
-          const user = await prisma.user.findUnique({
-            where: { email: data?.email },  // Sekarang pasti string yang valid
+          let user = null
+
+          console.log("credentials:", credentials)  // ← Tambahkan ini
+          console.log("credentials type:", typeof credentials)  // ← Dan ini
+
+          const { email, password } = await signInSchema.parseAsync(credentials)
+
+          // logic to salt and hash password
+          const pwHash = bcrypt.hash(password, 10)
+
+          // logic to verify if the user exists
+          user = await prisma.user.findUnique({
+            where: { email: email },
           })
-          if (!user || !user.password) {
-      throw new Error("Invalid credentials.")
-    }
-    
-    const isValid = await bcrypt.compare(data?.password as string, user.password)
-    if (!isValid) {
-      throw new Error("Invalid credentials.")
-    }
-    
-    return user
-  } catch (error) {
-    console.log(error)
-    return null
-  }
-},
+
+          if (!user) {
+            throw new Error("Invalid credentials.")
+          }
+
+          const isValid = await bcrypt.compare(password, user.password as string)
+
+          if (!isValid) {
+            throw new Error("Invalid credentials.")
+          }
+
+          // return JSON object with the user data
+          return user
+        } catch (error) {
+          console.log(error)
+          return null
+        }
+      },
     }),
   ],
   adapter: PrismaAdapter(prisma),
+
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+  },
+
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (token?.id) {
+        session.user.id = token.id as string
+      }
+      return session
+    }
+  }
 
 })

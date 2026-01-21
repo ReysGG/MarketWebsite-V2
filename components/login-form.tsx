@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { login } from "@/lib/login-register";
 import { useActionState } from "react";
+import { SignIn } from "./auth-components";
 
 export function LoginForm({
   className,
@@ -64,18 +65,23 @@ export function LoginForm({
                 </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit" disabled={pending}>
+                <Button type="submit" className="w-full" disabled={pending}>
                   Login
                 </Button>
-                <Button variant="outline" type="button">
-                  Login with Google
-                </Button>
-                <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
-                </FieldDescription>
               </Field>
             </FieldGroup>
           </form>
+          <div className="mt-4 flex flex-col gap-2">
+            <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+              <span className="relative z-10 bg-background px-2 text-muted-foreground">
+                Or continue with
+              </span>
+            </div>
+            <SignIn provider="google" />
+          </div>
+          <FieldDescription className="text-center mt-4">
+            Don&apos;t have an account? <a href="/register">Sign up</a>
+          </FieldDescription>
         </CardContent>
       </Card>
     </div>

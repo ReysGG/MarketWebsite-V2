@@ -48,18 +48,17 @@ export const register = async (prevState: unknown, formData: FormData) => {
     }
 
     // Auto sign-in after registration
-    await signIn("Credentials", {
+    await signIn("credentials", {
       email: user.email,
       password: password as string,
       redirect: false,
     });
-
-    // This will throw NEXT_REDIRECT which is intentional
-    redirect("/");
   } catch (error) {
     console.error("Registration error:", error);
     return { error: "Failed to create account. Please try again." };
   }
+
+  redirect("/");
 };
 
 export const login = async (prevState: unknown, formData: FormData) => {
