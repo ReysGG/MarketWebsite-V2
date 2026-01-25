@@ -11,12 +11,10 @@ export function SignIn({ provider }: { provider?: string }) {
   );
 }
 
-export function SignOut() {
+export function SignOut({ classname }: { classname?: string }) {
   return (
     <form action={signOutAction} className="w-full">
-      <button className="bg-neutral-700 text-white px-2 py-1 rounded-md">
-        Sign Out
-      </button>
+      <button className={classname}>Sign Out</button>
     </form>
   );
 }
