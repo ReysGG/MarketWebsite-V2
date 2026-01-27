@@ -12,9 +12,71 @@ export default function CreateBanner() {
             <h1 className="font-semibold">Ketentuan Upload Banner</h1>
           </div>
           <div className="gap-8">
-            <p className="text-sm text-gray-600">Ukuran Gambar : 1920 x 1080</p>
-            <p className="text-sm text-gray-600">Ukuran File : 2MB</p>
-            <p className="text-sm text-gray-600">Format File : JPG, PNG</p>
+            <h2 className="mb-2 text-lg font-medium text-heading">
+              Image Requirements:
+            </h2>
+            <ul className="max-w-md space-y-1 text-body list-inside">
+              <li className="flex items-center">
+                <svg
+                  className="w-4 h-4 text-fg-success me-1.5 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                Image size must be 1920 x 1080 pixels
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="w-4 h-4 text-fg-success me-1.5 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                Image format must be .jpg or .png
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="w-4 h-4 text-body me-1.5 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                Max size 5MB
+              </li>
+            </ul>
           </div>
         </div>
         <div className="border border-gray-200 rounded-lg px-6 mt-4">
