@@ -1,5 +1,8 @@
 import { CheckLineIcon, EyeIcon } from "@/components/admin/icons";
+import { FileUpload } from "@/components/ui/file-upload";
 import { Label } from "@/components/ui/label";
+import { FileUploadDemo } from "@/components/uploadbanner";
+import { IconUpload } from "@tabler/icons-react";
 
 export default function CreateBanner() {
   return (
@@ -80,9 +83,9 @@ export default function CreateBanner() {
           </div>
         </div>
         <div className="border border-gray-200 rounded-lg px-6 mt-4">
-          <form action="" className="flex items-center gap-4 py-4">
-            <div className="">
-              <Label>Upload Gambar</Label>
+          <form action="" className="flex flex-col items-center gap-4 py-4">
+            <div className="w-full">
+              <FileUploadDemo />
             </div>
           </form>
         </div>
