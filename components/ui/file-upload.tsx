@@ -27,11 +27,14 @@ const secondaryVariant = {
 
 export const FileUpload = ({
   onChange,
+  files,
 }: {
   onChange?: (files: File[]) => void;
+  files?: File[];
 }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [internalFiles, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const filesToDisplay = files || internalFiles;
 
   const handleFileChange = (newFiles: File[]) => {
     setFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -65,7 +68,7 @@ export const FileUpload = ({
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
           accept="image/*"
-          max={1}
+          disabled={filesToDisplay.length > 0}
         />
         <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
           <GridPattern />
@@ -78,8 +81,8 @@ export const FileUpload = ({
             Drag or drop your files here or click to upload
           </p>
           <div className="relative w-full mt-10 max-w-xl mx-auto">
-            {files.length > 0 &&
-              files.map((file, idx) => (
+            {filesToDisplay.length > 0 &&
+              filesToDisplay.map((file, idx) => (
                 <motion.div
                   key={"file" + idx}
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
@@ -128,7 +131,7 @@ export const FileUpload = ({
                   </div>
                 </motion.div>
               ))}
-            {!files.length && (
+            {!filesToDisplay.length && (
               <motion.div
                 layoutId="file-upload"
                 variants={mainVariant}
@@ -157,7 +160,7 @@ export const FileUpload = ({
               </motion.div>
             )}
 
-            {!files.length && (
+            {!filesToDisplay.length && (
               <motion.div
                 variants={secondaryVariant}
                 className="absolute opacity-0 border border-dashed border-sky-400 inset-0 z-30 bg-transparent flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md"
@@ -181,10 +184,11 @@ export function GridPattern() {
           return (
             <div
               key={`${col}-${row}`}
-              className={`w-10 h-10 flex shrink-0 rounded-[2px] ${index % 2 === 0
+              className={`w-10 h-10 flex shrink-0 rounded-[2px] ${
+                index % 2 === 0
                   ? "bg-gray-50 dark:bg-neutral-950"
                   : "bg-gray-50 dark:bg-neutral-950 shadow-[0px_0px_1px_3px_rgba(255,255,255,1)_inset] dark:shadow-[0px_0px_1px_3px_rgba(0,0,0,1)_inset]"
-                }`}
+              }`}
             />
           );
         }),

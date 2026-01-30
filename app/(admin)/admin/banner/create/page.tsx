@@ -83,11 +83,9 @@ export default function CreateBanner() {
           </div>
         </div>
         <div className="border border-gray-200 rounded-lg px-6 mt-4">
-          <form action="" className="flex flex-col items-center gap-4 py-4">
-            <div className="w-full">
-              <FileUploadDemo />
-            </div>
-          </form>
+          <div className="w-full">
+            <FileUploadDemo />
+          </div>
         </div>
       </div>
     </>
