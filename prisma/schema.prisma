@@ -65,13 +65,13 @@ model VerificationToken {
 }
 
 model Banner {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   image_url  String
   target_url String
-  is_active  Boolean  @default(true)
-  created_at DateTime @default(now())
-  updated_at DateTime
-  position   Int      @default(0)
+  is_active  Boolean   @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  position   Int       @default(0)
 }
 
 model UserAddress {
@@ -79,7 +79,7 @@ model UserAddress {
   userId    String
   label     String?
   alamat    String
-  phone     String
+  phone     String?
   isDefault Boolean @default(false)
   users     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
