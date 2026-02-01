@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma';
-import { put } from '@vercel/blob';
+import { del, put } from '@vercel/blob';
 import { request } from 'http';
 import { NextResponse } from 'next/server';
 
@@ -19,7 +19,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ message: 'File type must be .jpg or .png' }, { status: 400 });
   }
 
-  const blob = await put(file.name, file, {
+  try {
+    const blob = await put(file.name, file, {
     access: 'public',
     token: process.env.BLOB_READ_WRITE_TOKEN,
     allowOverwrite: true,
@@ -29,7 +30,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({message: 'failed to upload file', status:500})
   }
 
-  prisma.banner.create({
+  await prisma.banner.create({
     data: {
       image_url: blob.url,
       target_url: ''
@@ -38,13 +39,32 @@ export async function POST(request: Request): Promise<NextResponse> {
   console.log(blob)
 
   return NextResponse.json(blob.url)
+
+  } catch (error) {
+    return NextResponse.json({ message: error, status: 500 });
+  }
+  
 }
 
 export const DELETE = async (request: Request) => {
   const url = await request.json();
-  console.log(url);
+  console.log("url deleted : ", url);
 
-  
+  try {
+    await prisma.banner.deleteMany({
+      where: {
+        image_url: url.url
+      }
+    })
 
-  return NextResponse.json({ message: 'Banner deleted successfully' });
+    const blob = await del(url.url, {
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    })
+
+    console.log("Banner deleted successfully");
+    return NextResponse.json({ message: 'Banner deleted successfully' });
+  } catch (error) {
+    console.log("Failed to delete banner");
+    return NextResponse.json({ message: error, status: 500 });
+  }
 }

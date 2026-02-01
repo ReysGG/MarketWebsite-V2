@@ -57,8 +57,9 @@ export function FileUploadDemo() {
         return;
       }
 
-      setUrl(data.url);
+      setUrl(data);
       setLoading(false);
+      console.log(data);
     } catch (error: any) {
       setError(error.message as string);
       setLoading(false);
