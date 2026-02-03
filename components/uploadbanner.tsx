@@ -4,6 +4,8 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { PutBlobResult } from "@vercel/blob";
 import { Button } from "flowbite-react";
 import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
+import ModalFunction from "./modal";
 
 export function FileUploadDemo() {
   const [files, setFiles] = useState<File[]>([]);
@@ -59,12 +61,15 @@ export function FileUploadDemo() {
 
       setUrl(data);
       setLoading(false);
+      setIsModalOpen(true);
       console.log(data);
     } catch (error: any) {
       setError(error.message as string);
       setLoading(false);
     }
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="w-full max-w-4xl mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
@@ -73,7 +78,9 @@ export function FileUploadDemo() {
         <div className="w-full gap-4 mt-4">
           <div className="w-full flex justify-center gap-4 mt-4 mb-4">
             <Button
-              onClick={() => handleUpload()}
+              onClick={() => {
+                handleUpload();
+              }}
               className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
               disabled={loading}
             >
@@ -86,7 +93,15 @@ export function FileUploadDemo() {
               Delete
             </Button>
           </div>
-          {url && <p className="text-green-500 text-center">Success Upload</p>}
+          {url && (
+            <>
+              <p className="text-green-500 text-center">Success Upload</p>
+              <ModalFunction
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+              />
+            </>
+          )}
           {error && <p className="text-red-500 text-center">{error}</p>}
         </div>
       )}
