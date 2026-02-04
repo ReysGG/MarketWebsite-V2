@@ -29,6 +29,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'media.istockphoto.com'
+      },
+      {
+        protocol: 'https',
+        hostname: '7jjexsbvbvxsfufb.public.blob.vercel-storage.com'
       }
     ],
   },

@@ -7,14 +7,17 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
-import { useState } from "react";
+import { FileUser } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default function ModalFunction({
   isOpen,
   onClose,
+  url,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  url: string;
 }) {
   return (
     <>
@@ -22,11 +25,11 @@ export default function ModalFunction({
         backdrop="opaque"
         classNames={{
           body: "py-6",
-          backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-          base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
-          header: "border-b-[1px] border-[#292f46]",
-          footer: "border-t-[1px] border-[#292f46]",
-          closeButton: "hover:bg-white/5 active:bg-white/10",
+          backdrop: "bg-black/50 backdrop-opacity-40",
+          base: "border-border bg-background dark:bg-background text-foreground",
+          header: "border-b-[1px] border-border",
+          footer: "border-t-[1px] border-border",
+          closeButton: "hover:bg-accent active:bg-accent/50",
         }}
         isOpen={isOpen}
         radius="lg"
@@ -36,37 +39,25 @@ export default function ModalFunction({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                Success Upload Banner
               </ModalHeader>
-              <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
+              <ModalBody className="flex flex-col items-center justify-center">
+                <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center">
+                  <FileUser className="w-12 h-12 text-white" />
+                </div>
+                <p className="text-green-500 text-center mt-4 font-bold">
+                  Success Upload Banner
                 </p>
               </ModalBody>
               <ModalFooter>
-                <Button color="default" variant="light" onPress={onClose}>
+                <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
                 <Button
-                  className="bg-[#6f4ef2] shadow-lg shadow-indigo-500/20"
-                  onPress={onClose}
+                  className="bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                  onPress={() => redirect(url)}
                 >
-                  Action
+                  Back To Banner Page?
                 </Button>
               </ModalFooter>
             </>

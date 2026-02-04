@@ -99,6 +99,7 @@ export function FileUploadDemo() {
               <ModalFunction
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
+                url={"/admin/banner"}
               />
             </>
           )}

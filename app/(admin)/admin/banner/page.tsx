@@ -1,7 +1,10 @@
 import SliderImage from "@/components/sliderimage";
 import { Button } from "@/components/ui/button";
+import { getBannerDB } from "@/lib/databasefunction/getBannerDB";
 
-export default function Banner() {
+export default async function Banner() {
+  const banner = await getBannerDB();
+  console.log(banner);
   return (
     <>
       <div className="gap-8">
@@ -10,7 +13,10 @@ export default function Banner() {
             Banner Management
           </h1>
           <div className="flex gap-4">
-            <a href="/admin/banner/create" className="bg-brand-500 text-white dark:bg-brand-500 dark:text-white px-4 py-2 rounded-md">
+            <a
+              href="/admin/banner/create"
+              className="bg-brand-500 text-white dark:bg-brand-500 dark:text-white px-4 py-2 rounded-md"
+            >
               Add Banner
             </a>
             <a
@@ -22,10 +28,12 @@ export default function Banner() {
           </div>
         </div>
         <div className="flex flex-col justify-center items-center gap-4">
-          <SliderImage></SliderImage>
+          <SliderImage banner={banner}></SliderImage>
           <div className="flex justify-between w-full items-center gap-4">
             <p className="text-center dark:text-white">Total Image</p>
-            <p className="text-center dark:text-white">2</p>
+            <p className="text-center dark:text-white">
+              {banner.length > 0 ? banner.length : "No Image"}
+            </p>
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
 "use client";
+import { Banner } from "@/app/generated/prisma/client";
 import { Carousel } from "flowbite-react";
 import Image from "next/image";
 
-const SliderImage = () => {
+const SliderImage = ({ banner }: { banner: Banner[] }) => {
   return (
     <div className="w-full aspect-[3/1]">
       <Carousel
@@ -10,24 +11,20 @@ const SliderImage = () => {
         slideInterval={5000}
       >
         {/* Slide 1 - Bungkus dengan div */}
-        <div className="relative w-full h-full">
-          <Image
-            src="https://media.istockphoto.com/id/583809524/photo/alberta-wilderness-near-banff.webp?b=1&s=612x612&w=0&k=20&c=-7tro3UbbvFxXEXlOIZNH7i_C4QQ1LI3jTsPnfi2mNU="
-            alt="Slide 1"
-            fill
-            className="object-cover rounded-lg"
-          />
-        </div>
 
-        {/* Slide 2 - Bungkus dengan div */}
-        <div className="relative w-full h-full">
-          <Image
-            src="https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE="
-            alt="Slide 2"
-            fill
-            className="object-cover rounded-lg"
-          />
-        </div>
+        {banner.map((item) => (
+          <div className="relative w-full h-full">
+            <Image
+              src={item.image_url}
+              alt={item.image_url}
+              fill
+              className="object-cover rounded-lg"
+              key={item.id}
+              loader={({ src }) => src}
+              loading="eager"
+            />
+          </div>
+        ))}
       </Carousel>
     </div>
   );
