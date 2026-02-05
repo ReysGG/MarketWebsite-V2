@@ -66,6 +66,7 @@ model VerificationToken {
 
 model Banner {
   id         Int       @id @default(autoincrement())
+  name       String?
   image_url  String
   target_url String
   is_active  Boolean   @default(true)

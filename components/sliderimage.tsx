@@ -12,19 +12,21 @@ const SliderImage = ({ banner }: { banner?: Banner[] }) => {
       >
         {/* Slide 1 - Bungkus dengan div */}
 
-        {banner && banner.length > 0 ? banner.map((item) => (
-          <div className="relative w-full h-full">
-            <Image
-              src={item.image_url}
-              alt={item.image_url}
-              fill
-              className="object-cover rounded-lg"
-              key={item.id}
-              loader={({ src }) => src}
-              loading="eager"
-            />
-          </div>
-        )) : (
+        {banner && banner.length > 0 ? (
+          banner.map((item) => (
+            <div className="relative w-full h-full">
+              <Image
+                src={item.image_url}
+                alt={item.image_url}
+                fill
+                className="object-cover rounded-lg"
+                key={item.id}
+                loader={({ src }) => src}
+                loading="eager"
+              />
+            </div>
+          ))
+        ) : (
           <div className="relative w-full h-full">
             <Image
               src="/placeholder.png"

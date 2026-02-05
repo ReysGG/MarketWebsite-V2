@@ -32,6 +32,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   await prisma.banner.create({
     data: {
+      name: file.name,
       image_url: blob.url,
       target_url: ''
     }
