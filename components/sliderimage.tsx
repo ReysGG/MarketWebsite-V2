@@ -3,7 +3,7 @@ import { Banner } from "@/app/generated/prisma/client";
 import { Carousel } from "flowbite-react";
 import Image from "next/image";
 
-const SliderImage = ({ banner }: { banner: Banner[] }) => {
+const SliderImage = ({ banner }: { banner?: Banner[] }) => {
   return (
     <div className="w-full aspect-[3/1]">
       <Carousel
@@ -12,7 +12,7 @@ const SliderImage = ({ banner }: { banner: Banner[] }) => {
       >
         {/* Slide 1 - Bungkus dengan div */}
 
-        {banner.map((item) => (
+        {banner && banner.length > 0 ? banner.map((item) => (
           <div className="relative w-full h-full">
             <Image
               src={item.image_url}
@@ -24,7 +24,19 @@ const SliderImage = ({ banner }: { banner: Banner[] }) => {
               loading="eager"
             />
           </div>
-        ))}
+        )) : (
+          <div className="relative w-full h-full">
+            <Image
+              src="/placeholder.png"
+              alt="placeholder"
+              fill
+              className="object-cover rounded-lg"
+              key="placeholder"
+              loader={({ src }) => src}
+              loading="eager"
+            />
+          </div>
+        )}
       </Carousel>
     </div>
   );
