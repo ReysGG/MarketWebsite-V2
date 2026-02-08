@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Modal,
   ModalContent,
@@ -8,7 +10,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { FileUser } from "lucide-react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function ModalFunction({
   isOpen,
@@ -19,6 +21,8 @@ export default function ModalFunction({
   onClose: () => void;
   url: string;
 }) {
+  const router = useRouter();
+
   return (
     <>
       <Modal
@@ -55,7 +59,7 @@ export default function ModalFunction({
                 </Button>
                 <Button
                   className="bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                  onPress={() => redirect(url)}
+                  onPress={() => router.push(url)}
                 >
                   Back To Banner Page?
                 </Button>
