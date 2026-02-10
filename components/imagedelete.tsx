@@ -10,7 +10,7 @@ export const DeleteImage = ({ banner }: { banner?: Banner[] }) => {
   return (
     <>
       {console.log(banner)}
-      <div className="gap-2">
+      <div className="gap-2 pb-24">
         {banner && banner?.length > 0 ? (
           banner?.map((item) => (
             <div

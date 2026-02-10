@@ -12,7 +12,11 @@ export default function DropdownFunction({ id }: { id: number }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <Dropdown className="">
+      <Dropdown
+        className="w-full h-full z-50"
+        placement="bottom-end"
+        shouldBlockScroll={false}
+      >
         <DropdownTrigger>
           <Button className="border rounded-md border-gray-500">
             Open Menu
