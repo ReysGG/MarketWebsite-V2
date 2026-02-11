@@ -1,10 +1,5 @@
-import { CheckLineIcon, EyeIcon } from "@/components/admin/icons";
 import { DeleteImage } from "@/components/imagedelete";
-import { FileUpload } from "@/components/ui/file-upload";
-import { Label } from "@/components/ui/label";
-import { FileUploadDemo } from "@/components/uploadbanner";
 import { getBannerDB } from "@/lib/databasefunction/getBannerDB";
-import { IconUpload } from "@tabler/icons-react";
 
 export default async function DeleteBanner() {
   const banner = await getBannerDB();

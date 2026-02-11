@@ -7,9 +7,11 @@ import {
 } from "@heroui/react";
 import { AlertDialogDestructive } from "../alert/alert";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DropdownFunction({ id }: { id: number }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   return (
     <>
       <Dropdown
@@ -29,7 +31,9 @@ export default function DropdownFunction({ id }: { id: number }) {
           <DropdownItem
             key="edit"
             className="text-gray-500 border-b border-gray-500"
-            onPress={() => {}}
+            onPress={() => {
+              router.push(`/admin/banner/edit/${id}`);
+            }}
           >
             Edit
           </DropdownItem>

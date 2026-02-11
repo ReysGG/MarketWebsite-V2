@@ -20,7 +20,7 @@ export default async function Banner() {
               Add Banner
             </a>
             <a
-              href="/admin/banner/delete"
+              href="/admin/banner/edit"
               className="border-red-500 text-red-500 dark:border-red-500 dark:text-red-500 px-4 py-2 rounded-md cursor-pointer border-2"
             >
               Delete Banner
