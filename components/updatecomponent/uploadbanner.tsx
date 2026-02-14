@@ -105,7 +105,7 @@ export function FileUploadUpdate({ banner }: { banner: Banner }) {
               <ModalFunction
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                url={"/admin/banner"}
+                url={"/admin/banner/edit"}
               />
             </>
           )}
