@@ -23,7 +23,7 @@ export default async function Banner() {
               href="/admin/banner/edit"
               className="border-red-500 text-red-500 dark:border-red-500 dark:text-red-500 px-4 py-2 rounded-md cursor-pointer border-2"
             >
-              Delete Banner
+              Edit Banner
             </a>
           </div>
         </div>

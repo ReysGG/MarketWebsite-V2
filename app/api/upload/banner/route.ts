@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { form } from '@heroui/theme';
 import { del, put } from '@vercel/blob';
 import { request } from 'http';
 import { NextResponse } from 'next/server';
@@ -66,6 +67,43 @@ export const DELETE = async (request: Request) => {
     return NextResponse.json({ message: 'Banner deleted successfully' });
   } catch (error) {
     console.log("Failed to delete banner");
+    return NextResponse.json({ message: error, status: 500 });
+  }
+}
+
+export const PUT = async (request: Request) => {
+  const formData = await request.formData();
+  console.log(formData);
+
+  const file = formData.get('files') as File;
+  const id = formData.get('id') as string;
+  const url = formData.get('url') as string;
+
+  try {
+    const blob = await put(file.name, file, {
+      access: 'public',
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      allowOverwrite: true,
+    })
+
+    if(!blob){
+      return NextResponse.json({message: 'failed to upload file', status:500})
+    }
+
+    await prisma.banner.update({
+      where: {
+        id: parseInt(id)
+      },
+      data: {
+        name: file.name,
+        image_url: blob.url,
+        target_url: ''
+      }
+    })
+    console.log(blob)
+
+    return NextResponse.json(blob.url)
+  } catch (error) {
     return NextResponse.json({ message: error, status: 500 });
   }
 }

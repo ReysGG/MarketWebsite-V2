@@ -1,12 +1,12 @@
 import { DeleteImage } from "@/components/imagedelete";
 import { getBannerDB } from "@/lib/databasefunction/getBannerDB";
 
-export default async function DeleteBanner() {
+export default async function EditBanner() {
   const banner = await getBannerDB();
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Delete Banner</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Edit Banner</h1>
         <a
           href="/admin/banner"
           className="border border-gray-500 text-gray-500 dark:border-gray-500 dark:text-gray-500 px-4 py-1 rounded-md cursor-pointer"
